@@ -9,8 +9,7 @@ There are two problems with this:
 
 To get around this, a method called "Holepunching" is used, as detailed wonderfully [here.](http://www.brynosaurus.com/pub/net/p2pnat/)
 
-This project extends stylesuxx's implementation of this solution found [here](https://github.com/stylesuxx/udp-hole-punching)  
-to gracefully fall back to LAN addressing when two hosts are behind the same NAT router.
+This project extends stylesuxx's implementation of this solution found [here](https://github.com/stylesuxx/udp-hole-punching) to gracefully fall back to LAN addressing when two hosts are behind the same NAT router.
 
 This project demonstrates the connection, but does not implement any keep-alive functionality. After some idle time, the NAT will no longer accept incoming packets as replies to previous outgoing packet.
 
@@ -29,7 +28,7 @@ to register a server host, and
  python demo-peer.py  host <user-name> <server-name> 
 ```
 
-to connect with a given server.
+to connect with a given server host.
 
 Note that you must change **HANDSHAKE_SERVER_IP** and **HANDSHAKE_SERVER_PORT** in demo-peer.py. They default
 to '127.0.0.1' and 5160 respectively. **HANDSHAKE_SERVER_PORT** must match **SERVER_PORT** in demo-server.py.
@@ -37,4 +36,4 @@ to '127.0.0.1' and 5160 respectively. **HANDSHAKE_SERVER_PORT** must match **SER
 # License
 
 This code is meant for education purposes. Use it with the same freedom as you would the sun's rays, but
-I wouldn't recommend using it for anything other than a starting point.
+I wouldn't recommend using it for anything other than a tool to use in trying to grasp the theory.
