@@ -18,7 +18,6 @@
             'private-ip': <string>
             'private-port' <int>
             'server-name': <unique string>
-            'server-password': <string>
         }
     initiates a linking between the sender and the server peer registered user server-name.
 
@@ -59,7 +58,7 @@ class ServerProtocol(DatagramProtocol):
                 return
         #required for peers seeking to join a server
         if not jData['registering-server']:
-            requiredKeys = ['server-name', 'server-password']
+            requiredKeys = ['server-name']
             for key in requiredKeys:
                 if key in jData:
                     ret[key] = jData[key]
@@ -82,8 +81,6 @@ class ServerProtocol(DatagramProtocol):
         ret['public-address'] = (jData['public-ip'], jData['public-port'])
         ret['private-address'] = (jData['private-ip'], jData['private-port'])
         ret['user-name'] = jData['user-name']
-        if 'server-password' in jData.keys():
-            ret['server-password'] = jData['server-password']
         return ret
 
 
@@ -134,9 +131,3 @@ if __name__ == '__main__':
     listener = ServerProtocol()
     reactor.listenUDP(SERVER_PORT, listener)
     reactor.run()
-
-"""
-todo 
-: make it refresh server list 
-: send back confirmation / error message
-"""

@@ -14,7 +14,7 @@ there are six phases to this peer:
     3) using info received from server, send differentiated packets to private and public address of other peer
     4) Mirror whatever packet made it through from other peer's step 3 back to them
     5) Receive mirrored packet, which tells us which address (public or private) to use. 
-    6) Communicate with peer freely
+    6) Send a test message
 
 
 """
@@ -24,7 +24,7 @@ import sys
 import json
 
 #public address info for intermediary server
-HANDSHAKE_SERVER_IP = '35.197.160.85'
+HANDSHAKE_SERVER_IP = '127.0.0.1'
 HANDSHAKE_SERVER_PORT = 5160
 
 
@@ -124,23 +124,20 @@ class ClientProtocol(DatagramProtocol):
             print('peer address set as: ' + str(self.peerAddress))
             #send a friendly message
             message = {
-                "type": "message",
                 "user-name": userName,
-                "body": "hello you!"
+                "message": "hello you!"
             }
             self.transport.write(json.dumps(message).encode(), self.peerAddress)
             self.peerConnectionEstablished = True
 
-
         else:
-            #We just received a normal message
-            jData = json.loads(datagram)
-            print("received from: " + jData['user-name'])
-            print(jData['body'])
-
+            message = json.loads(datagram)
+            if 'user-name' in message and 'message' in message:
+                print("received message from " + message['user-name'] + ":")
+                print(message['message'])
 
 if __name__ == '__main__':
-    usage = "for servers: \n python peer.py server <server-name>\n\nfor others: \n python peer.py host <user-name> <server-name>"
+    usage = "\n\nUSAGE:\nfor servers: \n python peer.py server <server-name>\n\nfor others: \n python peer.py host <user-name> <server-name>\n"
     #set up either client or server from command line arguments
     #the ports chosen are almost arbitrary, but must be different if on the same computer
     if len(sys.argv) < 3:
@@ -169,16 +166,3 @@ if __name__ == '__main__':
     reactor.listenUDP(myPrivatePort, ClientProtocol())
     reactor.run()
 
-
-
-
-
-"""
-todo 
-: make it work with multiple peers
-: make it work with unordered and lost packets
-: give it a heartbeat
-
-remember:
-: this is only a demo for the server, so we can implement in godot. Don't go crazy
-"""
