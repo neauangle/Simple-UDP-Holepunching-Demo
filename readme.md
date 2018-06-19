@@ -33,3 +33,8 @@ to connect with a given server.
 
 Note that you must change HANDSHAKE_SERVER_IP and HANDSHAKE_SERVER_PORT in demo-peer.py. They default
 to '127.0.0.1' and 5160 respectively. HANDSHAKE_SERVER_PORT must match SERVER_PORT in demo-server.py.
+
+#License
+
+This code is meant for education purposes. Use it with the same freedom as you would the sun's rays, but
+I wouldn't recommend using it for anything other than a starting point.
